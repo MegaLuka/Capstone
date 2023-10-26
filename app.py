@@ -1,5 +1,4 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
 
 hostName = "0.0.0.0"
 serverPort = 80
