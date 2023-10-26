@@ -1,0 +1,67 @@
+# CircleCI configuration file
+version: 2.1
+
+jobs:
+  # Job one with a unique name
+  validate:
+    docker:
+     - image: python:3.7.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint 
+  # Job two with a unique name
+  build_and_push:
+    docker:
+      - image: cimg/python:3.7.10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: build-and-push-image
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            print('done')
+            ./run_docker.sh
+            print('done')
+            ./upload_docker.sh
+            print('done')
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+workflows:
+  # Name of workflow
+  capstone:
+    # List of jobs that will run
+    jobs:
+      - validate
+      - build_and_push
