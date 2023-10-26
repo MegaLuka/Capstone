@@ -53,6 +53,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            sudo systemctl start docker
             echo "done"
             ./run_docker.sh
             echo "done"
