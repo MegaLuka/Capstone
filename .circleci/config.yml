@@ -20,7 +20,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             echo "done"
-            # make install
+            make install
+            echo "done"
             # Install hadolint
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
@@ -34,7 +35,7 @@ jobs:
           command: |
             . venv/bin/activate
             echo "done"
-            lint 
+            make lint 
             echo "done"
   # Job two with a unique name
   build_and_push:
