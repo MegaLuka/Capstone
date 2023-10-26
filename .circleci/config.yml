@@ -34,7 +34,7 @@ jobs:
           command: |
             . venv/bin/activate
             echo "done"
-            make lint 
+            lint 
             echo "done"
   # Job two with a unique name
   build_and_push:
