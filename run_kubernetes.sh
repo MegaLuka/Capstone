@@ -10,12 +10,12 @@ dockerpath=0905062524/pythonapp:1.0
 # Step 2
 # Run the Docker Hub container with kubernetes
 #kubectl run pythonapp --image=$dockerpath
-kubectl apply -f deployment.yml
-kubectl apply -f nodeport.yml
+# kubectl apply -f deployment.yml
+# kubectl apply -f nodeport.yml
 
-# Step 3:
-# List kubernetes pods
-kubectl get pods --all-namespaces
+# # Step 3:
+# # List kubernetes pods
+# kubectl get pods --all-namespaces
 
 # Step 4:
 # Forward the container port to a host
