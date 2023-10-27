@@ -98,8 +98,6 @@ jobs:
       - run:
           name: deploy_apps
           command: |
-            aws eks update-kubeconfig --region us-east-1 --name mycluster
-            echo 'done'
             ./run_kubernetes.sh
       - save_cache:
           paths:
