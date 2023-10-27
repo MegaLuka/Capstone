@@ -6,7 +6,7 @@
 # Step 1:
 # Create dockerpath
 # dockerpath=<your docker ID/path>
-dockerpath=0905062524/nodeapp:1.0
+dockerpath=0905062524/pythonapp:1.0
 # Step 2:  
 # Authenticate & tag
 echo "Docker ID and Image: $dockerpath"

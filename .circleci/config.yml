@@ -36,7 +36,6 @@ jobs:
             echo "done"
             make lint 
             echo "done"
-  # Job two with a unique name
   build_and_push:
     docker:
       - image: cimg/python:3.7.16
@@ -65,9 +64,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
 workflows:
-  # Name of workflow
   capstone:
-    # List of jobs that will run
     jobs:
       #- validate
       - build_and_push
