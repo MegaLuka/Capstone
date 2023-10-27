@@ -1,9 +1,6 @@
 # CircleCI configuration file
 version: 2.1
 
-orbs:
-  docker: circleci/docker@2.4.0
-
 jobs:
   validate:
     docker:
