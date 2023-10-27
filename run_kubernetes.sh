@@ -10,6 +10,7 @@ dockerpath=0905062524/pythonapp:1.0
 # Step 2
 # Run the Docker Hub container with kubernetes
 #kubectl run pythonapp --image=$dockerpath
+aws sts get-caller-identity --profile default 
 # kubectl apply -f deployment.yml
 # kubectl apply -f nodeport.yml
 
