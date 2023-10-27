@@ -1,5 +1,8 @@
 # CircleCI configuration file
 version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@4.1.1
+  kubernetes: circleci/kubernetes@1.3.1
 
 jobs:
   validate:
@@ -53,18 +56,57 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            echo "done"
             ./run_docker.sh
-            echo "done"
             ./upload_docker.sh
-            echo "done"
       - save_cache:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
+  # deploy-infrastructure:
+  #   docker:
+  #     - image: amazon/aws-cli
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Install gzip
+  #         command: |
+  #           yum -y install tar gzip
+  #     - run:
+  #         name: Ensure cluster infrastructure exists
+  #         command: |
+  #           aws cloudformation deploy \
+  #             --template-file .circleci/files/kubernetes-cluster.yml \
+  #             --stack-name "udapeople-cluster-${CIRCLE_WORKFLOW_ID:0:7}" \
+  #             --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+  #             --tags project=udapeople
+  #     - destroy-environment:
+  #           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+  deploy_app:
+    docker:
+      - image: cimg/python:3.7.16
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile_name: "default"
+      - kubernetes/install
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: deploy_apps
+          command: |
+            aws eks update-kubeconfig --region us-east-1 --name mycluster
+            ./run_kubernetes.sh
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
 workflows:
   capstone:
     jobs:
       #- validate
       - build_and_push
+      - deploy_app
