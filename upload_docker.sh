@@ -10,7 +10,7 @@ dockerpath=0905062524/pythonapp:1.0
 # Step 2:  
 # Authenticate & tag
 echo "Docker ID and Image: $dockerpath"
-docker login
+docker login -u 0905062524 -p 090252450624dffd
 
 # Step 3:
 # Push image to a docker repository
