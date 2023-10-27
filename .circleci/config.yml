@@ -98,7 +98,31 @@ jobs:
       - run:
           name: deploy_apps
           command: |
-            ./run_kubernetes.sh
+            aws eks create-cluster --region us-east-1 --name my-cluster3 --kubernetes-version 1.28 \
+            --role-arn arn:aws:iam::837117057604:role/myAmazonEKSClusterRole \
+            --resources-vpc-config subnetIds=subnet-04c3a7789e530823a,subnet-026079be198c13213,subnet-0295f0553ea92cb97
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+  configure:
+    docker:
+      - image: cimg/python:3.7.16
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile_name: "default"
+      - kubernetes/install
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: deploy_apps
+          command: |
+            aws eks update-kubeconfig --region us-east-1 --name my-cluster3
+            kubectl get svc
       - save_cache:
           paths:
             - ./venv
@@ -110,3 +134,5 @@ workflows:
       - build_and_push
       - deploy_app:
             requires: [build_and_push]
+      - configure:
+            requires: [deploy_app]

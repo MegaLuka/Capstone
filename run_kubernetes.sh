@@ -16,8 +16,8 @@ aws eks create-cluster --region us-east-1 --name my-cluster2 --kubernetes-versio
    --resources-vpc-config subnetIds=subnet-04c3a7789e530823a,subnet-026079be198c13213,subnet-0295f0553ea92cb97
 aws eks update-kubeconfig --region us-east-1 --name my-cluster2
 kubectl get svc
-kubectl apply -f deployment.yml
-kubectl apply -f nodeport.yml
+# kubectl apply -f deployment.yml
+# kubectl apply -f nodeport.yml
 
 # # Step 3:
 # # List kubernetes pods
