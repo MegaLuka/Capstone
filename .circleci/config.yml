@@ -109,4 +109,5 @@ workflows:
     jobs:
       #- validate
       - build_and_push
-      - deploy_app
+      - deploy_app:
+            requires: [build_and_push]
