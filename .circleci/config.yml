@@ -48,7 +48,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - setup_remote_docker:
-          version: 20.10.21
           docker_layer_caching: true
       - run:
           name: build-and-push-image
