@@ -140,4 +140,4 @@ workflows:
       - deploy_infra:
             requires: [build_and_push]
       - configure:
-            requires: [deploy_app]
+            requires: [deploy_infra]
