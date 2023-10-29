@@ -17,3 +17,17 @@ Resources:
             - subnet-0295f0553ea92cb97
         RoleArn: arn:aws:iam::837117057604:role/eksClusterRole
         Version: 1.28
+  NodeGroup:
+    DependsOn: 
+      - Cluster
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      AmiType: AL2_x86_64
+      CapacityType: ON_DEMAND
+      ClusterName: !Ref Cluster
+      NodegroupName: nodegroup
+      NodeRole: arn:aws:iam::837117057604:role/myAmazonEKSNodeRole
+      Subnets: 
+        - subnet-04c3a7789e530823a
+        - subnet-026079be198c13213
+        - subnet-0295f0553ea92cb97
