@@ -2,23 +2,21 @@ Resources:
   Cluster:
     Type: AWS::EKS::Cluster
     Properties:
-      KubernetesNetworkConfig: 
-            IpFamily: ipv4
-            ServiceIpv4Cidr: 10.100.0.0/16
-      Name: my-cluster
-      OutpostConfig: 
-        OutpostConfig
-      ResourcesVpcConfig: 
+        KubernetesNetworkConfig: 
+          IpFamily: ipv4
+          ServiceIpv4Cidr: 10.100.0.0/16
+        Name: my-cluster
+        ResourcesVpcConfig: 
           EndpointPrivateAccess: false
           EndpointPublicAccess: true
           PublicAccessCidrs: 
                 - 0.0.0.0/0
-      SubnetIds: 
-        - subnet-04c3a7789e530823a
-        - subnet-026079be198c13213
-        - subnet-0295f0553ea92cb97
-      RoleArn: arn:aws:iam::837117057604:role/eksClusterRole
-      Version: 1.28
+        SubnetIds: 
+          - subnet-04c3a7789e530823a
+          - subnet-026079be198c13213
+          - subnet-0295f0553ea92cb97
+        RoleArn: arn:aws:iam::837117057604:role/eksClusterRole
+        Version: 1.28
   NodeGroup:
     Type: AWS::EKS::Nodegroup
     Properties:
