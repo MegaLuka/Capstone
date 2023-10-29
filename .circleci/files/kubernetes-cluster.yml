@@ -11,11 +11,11 @@ Resources:
           EndpointPublicAccess: true
           PublicAccessCidrs: 
                 - 0.0.0.0/0
-        SubnetIds: 
-          - subnet-04c3a7789e530823a
-          - subnet-026079be198c13213
-          - subnet-0295f0553ea92cb97
-        RoleArn: arn:aws:iam::837117057604:role/eksClusterRole
+          SubnetIds: 
+            - subnet-04c3a7789e530823a
+            - subnet-026079be198c13213
+            - subnet-0295f0553ea92cb97
+          RoleArn: arn:aws:iam::837117057604:role/eksClusterRole
         Version: 1.28
   NodeGroup:
     Type: AWS::EKS::Nodegroup
