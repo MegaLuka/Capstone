@@ -82,7 +82,7 @@ jobs:
   #             --tags project=udapeople
   #     - destroy-environment:
   #           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-  deploy_app:
+  deploy_infra:
     docker:
       - image: cimg/python:3.7.16
     steps:
@@ -98,9 +98,14 @@ jobs:
       - run:
           name: deploy_apps
           command: |
-            aws eks create-cluster --region us-east-1 --name my-cluster3 --kubernetes-version 1.28 \
-            --role-arn arn:aws:iam::837117057604:role/myAmazonEKSClusterRole \
-            --resources-vpc-config subnetIds=subnet-04c3a7789e530823a,subnet-026079be198c13213,subnet-0295f0553ea92cb97
+            # aws eks create-cluster --region us-east-1 --name my-cluster3 --kubernetes-version 1.28 \
+            # --role-arn arn:aws:iam::837117057604:role/myAmazonEKSClusterRole \
+            # --resources-vpc-config subnetIds=subnet-04c3a7789e530823a,subnet-026079be198c13213,subnet-0295f0553ea92cb97
+              aws cloudformation deploy \
+              --template-file .circleci/files/kubernetes-cluster.yml \
+              --stack-name InitialStack \
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople
       - save_cache:
           paths:
             - ./venv
@@ -121,8 +126,8 @@ jobs:
       - run:
           name: deploy_apps
           command: |
-            aws eks update-kubeconfig --region us-east-1 --name my-cluster3
-            kubectl get svc
+            aws eks update-kubeconfig --region us-east-1 --name my-cluster
+            kubectl get svchttps://github.com/FXinnovation/aldo-terraform-deployment-test-automatic-release
       - save_cache:
           paths:
             - ./venv
@@ -132,7 +137,7 @@ workflows:
     jobs:
       #- validate
       - build_and_push
-      - deploy_app:
+      - deploy_infra:
             requires: [build_and_push]
       - configure:
             requires: [deploy_app]
