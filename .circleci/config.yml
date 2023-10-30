@@ -132,9 +132,9 @@ workflows:
   capstone:
     jobs:
       - validate
-      - build_and_push:
-            requires: [validate]
-      - deploy_infra:
-            requires: [build_and_push]
-      - deploy_app:
-            requires: [deploy_infra]
+      # - build_and_push:
+      #       requires: [validate]
+      # - deploy_infra:
+      #       requires: [build_and_push]
+      # - deploy_app:
+      #       requires: [deploy_infra]
