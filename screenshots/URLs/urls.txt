@@ -1,0 +1,6 @@
+Source code: https://github.com/MegaLuka/Capstone/tree/dev
+Docker repo: https://hub.docker.com/repository/docker/0905062524/pythonapp/general
+
+App urls: 
+http://34.228.165.43:31018/ 
+http://18.207.229.237:31018/
