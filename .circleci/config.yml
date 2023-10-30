@@ -159,5 +159,5 @@ workflows:
      # - build_and_push
       # - deploy_infra
             #requires: [build_and_push]
-      - configure_deploy_app:
-            requires: [deploy_infra]
+      - configure_deploy_app
+            # requires: [deploy_infra]
