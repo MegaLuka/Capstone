@@ -117,15 +117,15 @@ jobs:
             # --resources-vpc-config subnetIds=subnet-04c3a7789e530823a,subnet-026079be198c13213,subnet-0295f0553ea92cb97
               aws cloudformation deploy \
               --template-file .circleci/files/kubernetes-cluster.yml \
-              --stack-name InitialStack \
+              --stack-name InitialStack1 \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
       - save_cache:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      - destroy-environment:
-            workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - destroy-environment:
+      #       workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
   configure:
     docker:
       - image: cimg/python:3.7.16
@@ -148,8 +148,8 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      - destroy-environment:
-            workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - destroy-environment:
+      #       workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 workflows:
   capstone:
     jobs:
