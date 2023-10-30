@@ -127,7 +127,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       # - destroy-environment:
       #       workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-  configure:
+  configure_deploy_app:
     docker:
       - image: cimg/python:3.7.16
     steps:
@@ -143,8 +143,9 @@ jobs:
       - run:
           name: deploy_apps
           command: |
-            aws eks update-kubeconfig --region us-east-1 --name my-cluster2
-            kubectl get svc
+            # aws eks update-kubeconfig --region us-east-1 --name my-cluster2
+            # kubectl get svc
+            ./run_kubernetes.sh
       - save_cache:
           paths:
             - ./venv
@@ -156,7 +157,7 @@ workflows:
     jobs:
       #- validate
      # - build_and_push
-      - deploy_infra
+      # - deploy_infra
             #requires: [build_and_push]
-      - configure:
+      - configure_deploy_app:
             requires: [deploy_infra]
