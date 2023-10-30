@@ -6,7 +6,7 @@ Resources:
         KubernetesNetworkConfig: 
           IpFamily: ipv4
           ServiceIpv4Cidr: 10.100.0.0/16
-        Name: my-cluster1
+        Name: my-cluster2
         ResourcesVpcConfig: 
           EndpointPrivateAccess: false
           EndpointPublicAccess: true
@@ -24,7 +24,7 @@ Resources:
     Properties:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
-      ClusterName: my-cluster1
+      ClusterName: my-cluster2
       NodegroupName: nodegroup
       NodeRole: arn:aws:iam::837117057604:role/myAmazonEKSNodeRole
       Subnets: 
